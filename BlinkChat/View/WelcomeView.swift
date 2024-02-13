@@ -2,7 +2,7 @@
 //  WelcomeView.swift
 //  BlinkChat
 //
-//  Created by Noman Ashraf on 1/18/24.
+//  Created by Zain Ashraf on 1/18/24.
 //
 
 import SwiftUI
@@ -67,6 +67,7 @@ struct WelcomeView: View {
             )
         }
         .tint(.orange)
+        .navigationBarHidden(true)
         .foregroundStyle(.black)
     }
 }

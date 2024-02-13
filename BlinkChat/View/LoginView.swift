@@ -2,16 +2,13 @@
 //  LoginView.swift
 //  BlinkChat
 //
-//  Created by Noman Ashraf on 1/18/24.
+//  Created by Zain Ashraf on 2/12/24.
 //
 
 import SwiftUI
 
 struct LoginView: View {
-    @State private var email = ""
-    @State private var password = ""
-    @State private var isLoggedIn = false
-    let viewModel = LoginViewModel()
+    @State var viewModel = LoginViewModel()
     var body: some View {
         VStack{
             Spacer()
@@ -19,28 +16,19 @@ struct LoginView: View {
                 .font(.title.bold())
                 .foregroundColor(.orange)
                 .padding()
-            TextField("Email", text: $email)
+            TextField("Email", text: $viewModel.email)
                 .padding()
                 .background(Color.white.opacity(0.8))
                 .cornerRadius(10)
                 .padding(.horizontal)
-            SecureField("Password", text: $password)
+            SecureField("Password", text: $viewModel.password)
                 .padding()
                 .background(Color.white.opacity(0.8))
                 .cornerRadius(10)
                 .padding(.horizontal)
             
             Button(action: {
-                viewModel.login(email: email, password: password) { result in
-                    switch result{
-                    case .success():
-                        isLoggedIn=true
-                    case .failure(let error):
-                        isLoggedIn=false
-                        print("ERROR:\(error)")
-                    }
-                }
-                isLoggedIn=false
+                viewModel.login()
             }, label: {
                 Text("Login")
                     .foregroundColor(.white)
@@ -50,13 +38,17 @@ struct LoginView: View {
                     .cornerRadius(10)
             })
             .padding(.horizontal)
-            .navigationDestination(isPresented: $isLoggedIn) {
-                ContentView()
+            .navigationDestination(isPresented: $viewModel.isLoggedIn) {
+                HomeView(viewModel: HomeViewModel(viewModel.email))
             }
+            .alert("Incorrect email or password", isPresented: $viewModel.incorrectCredentials) {
+                Button("OK", role: .cancel) { viewModel.incorrectCredentials=false }
+            }
+            
             NavigationLink(
-                destination: ContentView(),
+                destination: RegisterView(),
                 label: {
-                    Text("Don't Have a account?")
+                    Text("Don't have a account?")
                         .foregroundStyle(.orange.opacity(0.9))
                         
                 }
@@ -65,10 +57,10 @@ struct LoginView: View {
             Spacer()
             Spacer()
         }
+        .navigationBarHidden(true)
         .background(
             LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .top, endPoint: .bottom)
-                .edgesIgnoringSafeArea(.all)
-        )
+                .edgesIgnoringSafeArea(.all))
     }
 }
 

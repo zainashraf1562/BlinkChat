@@ -1,20 +1,25 @@
 //
-//  loginViewModel.swift
+//  LoginViewModel.swift
 //  BlinkChat
 //
-//  Created by Noman Ashraf on 1/21/24.
+//  Created by Zain Ashraf on 2/12/24.
 //
 
 import Foundation
 import FirebaseAuth
 
+@Observable
 class LoginViewModel {
-    func login(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
+    var email = ""
+    var password = ""
+    var isLoggedIn = false
+    var incorrectCredentials = false
+    func login() {
         FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
             if let error = error {
-                completion(.failure(error))
+                self.incorrectCredentials=true
             } else {
-                completion(.success(()))
+                self.isLoggedIn=true
             }
         }
     }

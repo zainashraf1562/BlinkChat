@@ -2,16 +2,24 @@
 //  BlinkChatApp.swift
 //  BlinkChat
 //
-//  Created by Noman Ashraf on 1/18/24.
+//  Created by Zain Ashraf on 1/18/24.
 //
 
 import SwiftUI
+import Firebase
 
 @main
 struct BlinkChatApp: App {
+    init() {
+        FirebaseApp.configure()
+    }
     var body: some Scene {
         WindowGroup {
-            WelcomeView()
+            NavigationStack{
+                WelcomeView()
+            }
+            .tint(.orange)
+            .foregroundStyle(.black)
         }
     }
 }
