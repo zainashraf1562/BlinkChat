@@ -5,7 +5,7 @@
 - [x] User can Login.
 - [x] One on One chat
 - [x] Add and retrieve messages from database.
-- [x] send text messages
-- [x] realtime message retrieval
+- [x] Send text messages
+- [x] Realtime message retrieval
 - [x] User profile
 - [x] User can Logout.
